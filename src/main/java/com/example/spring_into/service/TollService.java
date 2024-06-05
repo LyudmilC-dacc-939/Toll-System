@@ -7,4 +7,6 @@ public interface TollService {
     TollPass addToll(TollRequest tollPass) throws Exception;
 
     boolean checkValidity(String regNumber, String country);
+
+    void deleteToll(Long tollId);
 }
