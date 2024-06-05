@@ -1,0 +1,20 @@
+spring:
+  application:
+    name: spring-into
+  datasource:
+    url: jdbc:mysql://localhost:3306/toll_system?createDatabaseIfNotExist=true
+    driverClassName: com.mysql.cj.jdbc.Driver
+    username: root
+  #    password: <your password>
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+    format-sql: true
+
+dates:
+  weekend: 2
+  week: 7
+  month: 30
+  year: 365
+
