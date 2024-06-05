@@ -15,6 +15,6 @@ spring:
 dates:
   weekend: 2
   week: 7
-  month: 30
+  month: 31
   year: 365
 
