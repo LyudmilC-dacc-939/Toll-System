@@ -1,6 +1,6 @@
 package com.example.spring_into.service.impl;
 
-import com.example.spring_into.converter.OwnerConveter;
+import com.example.spring_into.converter.OwnerConverter;
 import com.example.spring_into.converter.TollConverter;
 import com.example.spring_into.dto.TollRequest;
 import com.example.spring_into.model.Owner;
@@ -23,14 +23,17 @@ public class TollServiceImpl implements TollService {
     private final TollRepository tollRepository;
     private final TollConverter tollConverter;
     private final OwnerRepository ownerRepository;
-    private final OwnerConveter ownerConveter;
+    private final OwnerConverter ownerConverter;
 
     @Autowired
-    public TollServiceImpl(TollRepository tollRepository, TollConverter tollConverter, OwnerRepository ownerRepository, OwnerConveter ownerConveter) {
+    public TollServiceImpl(TollRepository tollRepository,
+                           TollConverter tollConverter,
+                           OwnerRepository ownerRepository,
+                           OwnerConverter ownerConverter) {
         this.tollRepository = tollRepository;
         this.tollConverter = tollConverter;
         this.ownerRepository = ownerRepository;
-        this.ownerConveter = ownerConveter;
+        this.ownerConverter = ownerConverter;
     }
 
     @Transactional
@@ -39,12 +42,12 @@ public class TollServiceImpl implements TollService {
         Optional<Owner> owner = ownerRepository.findByEmail(tollRequest.getEmail());
         Owner existingOwner;
 
-        if(owner.isEmpty()){
-            log.info("Going to create new owner with identifier: "+ tollRequest.getEmail());
-            existingOwner = ownerRepository.save(ownerConveter.toOwner(tollRequest));
+        if (owner.isEmpty()) {
+            log.info("Going to create new owner with identifier: " + tollRequest.getEmail());
+            existingOwner = ownerRepository.save(ownerConverter.toOwner(tollRequest));
 
-        }else {
-            log.info("Going to use existing owner with identifier: "+ tollRequest.getEmail());
+        } else {
+            log.info("Going to use existing owner with identifier: " + tollRequest.getEmail());
             existingOwner = owner.get();
         }
 
@@ -56,11 +59,11 @@ public class TollServiceImpl implements TollService {
 
     @Override
     public boolean checkValidity(String regNumber, String country) {
-        Optional<TollPass> tollPass = tollRepository.findByRegNumberAndCountry(regNumber,country);
+        Optional<TollPass> tollPass = tollRepository.findByRegNumberAndCountry(regNumber, country);
         //sendFine()
-        if(!tollPass.isEmpty()){
+        if (!tollPass.isEmpty()) {
             return !tollPass.get().getExpDate().isBefore(Instant.now());
-        } else{
+        } else {
             return false;
         }
 

@@ -1,17 +1,11 @@
 package com.example.spring_into.dto;
 
 import jakarta.validation.constraints.Email;
-import jakarta.validation.constraints.NotNull;
-import lombok.Getter;
-import lombok.Setter;
-import org.springframework.stereotype.Component;
+import lombok.Data;
 
-@Setter
-@Getter
-@Component
-public class OwnerRequest {
-
-
+@Data
+public class OwnerResponse {
+    private Long id;
     private String firstName;
     private String lastName;
     private String address;
